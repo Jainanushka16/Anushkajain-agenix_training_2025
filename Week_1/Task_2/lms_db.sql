@@ -1,0 +1,52 @@
+
+-- STAFF TABLE
+CREATE TABLE Staff(
+    Staff_id SERIAL PRIMARY KEY,
+	f_name VARCHAR(50) NOT NULL,
+	l_name VARCHAR(50) NOT NULL
+);
+
+-- AUTHOR TABLE
+CREATE TABLE Author(
+    Author_id INT PRIMARY KEY,
+	Author_name VARCHAR(100) NOT NULL
+);
+
+-- BOOKS TABLE
+CREATE TABLE Books(
+    Book_id SERIAL PRIMARY KEY,
+	Book_name VARCHAR(100) NOT NULL,
+	Published_date DATE,
+	Genre VARCHAR(50),
+	Author_id INT NOT NULL,
+	FOREIGN KEY (Author_id) REFERENCES Author(Author_id)ON DELETE CASCADE
+);
+
+-- CUSTOMER TABLE
+CREATE TABLE Customer(
+    Customer_id SERIAL PRIMARY KEY,
+	Customer_name VARCHAR(100) NOT NULL,
+	email VARCHAR(50) UNIQUE NOT NULL,
+	Phone_no INT NOT NULL,
+	Address TEXT NOT NULL,
+	DOB DATE,
+	Age INT ,
+	Membership_date DATE DEFAULT CURRENT_DATE,
+	Memebership_status VARCHAR(10) DEFAULT 'INACTIVE'
+);
+
+
+-- TRANSACTION TABLE
+CREATE TABLE Transaction(
+    Transaction_id SERIAL PRIMARY KEY,
+	Issue_date DATE NOT NULL,
+	Due_date DATE NOT NULL,
+	Status VARCHAR(20),
+	Customer_id INT NOT NULL,
+	Staff_id INT NOT NULL,
+	Book_id INT NOT NULL,
+	FOREIGN KEY (Customer_id) REFERENCES Customer(Customer_id) ON DELETE CASCADE,
+	FOREIGN KEY (Staff_id) REFERENCES Staff(Staff_id) ON DELETE CASCADE,
+	FOREIGN KEY (Book_id) REFERENCES Books(Book_id) ON DELETE CASCADE
+);
+
